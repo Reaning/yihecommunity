@@ -6,7 +6,6 @@ import life.yihe.community.community.dto.GithubUser;
 import life.yihe.community.community.mapper.UserMapper;
 import life.yihe.community.community.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -63,6 +62,5 @@ public class AuthorizeController {
             // 登录失败，重新登录
             return "redirect:/";
         }
-//        return "index";
     }
 }
