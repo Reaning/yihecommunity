@@ -60,7 +60,7 @@
                 </div>
                 <div class="form-group">
                     <label for="title">问题补充</label>
-                    <textarea name="description" id="description" class="form-control" cols="30" rows="10" th:value="${description}"></textarea>
+                    <textarea name="description" id="description" class="form-control" cols="30" rows="10" th:text="${description}"></textarea>
                 </div>
                 <div class="form-group">
                     <label for="title">添加标签</label>
@@ -69,7 +69,8 @@
 
                 <div class="container-fluid main">
                     <div class="row">
-                        <div class="alert alert-danger col-lg-9 col-md-12 col-sm-12 col-xs-12" style="" th:text="${error}" th:if="${error!=null}">
+                        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" style="" >
+                            <div class="alert-danger col-lg-12 col-md-12 col-sm-12 col-xs-12" th:text="${error}" th:if="${error!=null}"></div>
                         </div>
                         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12" style="">
                             <button type="submit" class="btn btn-success btn-publish">发布</button>
