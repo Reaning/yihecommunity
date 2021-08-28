@@ -31,11 +31,8 @@
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">消息中心</a></li>
-                        <li><a href="#">个人资料</a></li>
+                        <li><a href="/profile/question">个人中心</a></li>
                         <li><a href="#">退出登录</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="#">Separated link</a></li>
                     </ul>
                 </li>
                 <li th:unless="${session.user != null}"><a href="https://github.com/login/oauth/authorize/?client_id=d6c5e256b9fbe5713894&redirect_uri=http://localhost:8887/callback&scope=user&state=1">登录</a></li>
