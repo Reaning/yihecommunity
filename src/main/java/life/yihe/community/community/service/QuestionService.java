@@ -82,5 +82,13 @@ public class QuestionService {
         questionDTO.setUser(userMapper.findById(question.getCreator()));
         return questionDTO;
     }
+    public void createOrUpdate(Question question) {
+        if(question.getId() == null){
+            questionMapper.create(question);
+        }else{
+            question.setGmtModified(System.currentTimeMillis());
+            questionMapper.update(question);
+        }
+    }
 }
 
