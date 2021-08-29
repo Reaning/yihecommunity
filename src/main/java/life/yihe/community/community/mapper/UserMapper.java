@@ -2,10 +2,7 @@ package life.yihe.community.community.mapper;
 
 //import life.majiang.community.model.User;
 import life.yihe.community.community.model.User;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 /**
  * Created by codedrinker on 2019/4/30.
@@ -20,4 +17,9 @@ public interface UserMapper {
 
     @Select("select * from user where id=#{id}")
     User findById(@Param("id") Integer id);
+
+    @Select("select * from user where account_id=#{accountid}")
+    User findByAccountId(@Param("accountid") String accountId);
+    @Update("update user set name = #{name}, token = #{token},avatar_url = #{avatarUrl}, gmt_modified = #{gmtModified} where id = #{id}")
+    void update(User dbUser);
 }
