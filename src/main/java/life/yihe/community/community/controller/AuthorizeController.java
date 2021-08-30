@@ -26,9 +26,6 @@ public class AuthorizeController {
     private GithubProvider githubProvider;
 
     @Autowired
-//    @Qualifier("sqlSessionFactory")
-    private UserMapper userMapper;
-    @Autowired
     private QuestionService questionService;
 
     @Autowired

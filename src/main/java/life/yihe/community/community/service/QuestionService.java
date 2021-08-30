@@ -35,7 +35,7 @@ public class QuestionService {
         List<QuestionDTO>questionDTOList = new ArrayList<>();
         PaginationDTO paginationDTO = new PaginationDTO();
         for(Question question : questions){
-            User user = userMapper.findById(question.getCreator());
+            User user = userMapper.selectByPrimaryKey(question.getCreator());
             QuestionDTO questionDTO = new QuestionDTO();
             BeanUtils.copyProperties(question,questionDTO);//从前面的对象复制到后面的对象
             questionDTO.setUser(user);
@@ -62,7 +62,7 @@ public class QuestionService {
         List<QuestionDTO>questionDTOList = new ArrayList<>();
         PaginationDTO paginationDTO = new PaginationDTO();
         for(Question question : questions){
-            User user = userMapper.findById(question.getCreator());
+            User user = userMapper.selectByPrimaryKey(question.getCreator());
             QuestionDTO questionDTO = new QuestionDTO();
             BeanUtils.copyProperties(question,questionDTO);//从前面的对象复制到后面的对象
             questionDTO.setUser(user);
@@ -79,7 +79,7 @@ public class QuestionService {
         Question question = questionMapper.getById(id);
         QuestionDTO questionDTO = new QuestionDTO();
         BeanUtils.copyProperties(question,questionDTO);
-        questionDTO.setUser(userMapper.findById(question.getCreator()));
+        questionDTO.setUser(userMapper.selectByPrimaryKey(question.getCreator()));
         return questionDTO;
     }
     public void createOrUpdate(Question question) {
