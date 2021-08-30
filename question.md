@@ -32,3 +32,8 @@ FastJson中自带，Mybatis中需要进行配置
 
 ```
 或者去掉@EnableWebMvc
+### UserMapper注入失败
+mybatis.type-aliases-package没有配置好
+### 出现id为空无法写入数据库的问题
+updateByExampleSelective：选择性更新数据<br>
+updateByExample：全部更新
