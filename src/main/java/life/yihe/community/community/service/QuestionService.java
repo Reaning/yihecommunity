@@ -2,6 +2,9 @@ package life.yihe.community.community.service;
 
 import life.yihe.community.community.dto.PaginationDTO;
 import life.yihe.community.community.dto.QuestionDTO;
+import life.yihe.community.community.exception.CustomizeErrorCode;
+import life.yihe.community.community.exception.CustomizeException;
+import life.yihe.community.community.exception.ICustomizeErrorCode;
 import life.yihe.community.community.mapper.QuestionMapper;
 import life.yihe.community.community.mapper.UserMapper;
 import life.yihe.community.community.model.Question;
@@ -41,8 +44,6 @@ public class QuestionService {
             QuestionDTO questionDTO = new QuestionDTO();
             BeanUtils.copyProperties(question,questionDTO);//从前面的对象复制到后面的对象
             questionDTO.setUser(user);
-//            questionDTO.setDescription("abc");
-//            System.out.println(questionDTO.getDescription());
             questionDTOList.add(questionDTO);
         }
         paginationDTO.setQuestions(questionDTOList);
@@ -74,8 +75,6 @@ public class QuestionService {
             QuestionDTO questionDTO = new QuestionDTO();
             BeanUtils.copyProperties(question,questionDTO);//从前面的对象复制到后面的对象
             questionDTO.setUser(user);
-//            questionDTO.setDescription("abc");
-//            System.out.println(questionDTO.getDescription());
             questionDTOList.add(questionDTO);
         }
         paginationDTO.setQuestions(questionDTOList);
@@ -85,6 +84,9 @@ public class QuestionService {
 
     public QuestionDTO getById(Integer id) {
         Question question = questionMapper.selectByPrimaryKey(id);
+        if(question == null){
+            throw new CustomizeException(CustomizeErrorCode.QUESTIOM_NOT_FOUND);
+        }
         QuestionDTO questionDTO = new QuestionDTO();
         BeanUtils.copyProperties(question,questionDTO);
         questionDTO.setUser(userMapper.selectByPrimaryKey(question.getCreator()));

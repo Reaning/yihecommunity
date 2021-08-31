@@ -19,8 +19,6 @@ public class UserService {
         example.createCriteria()
                 .andAccountIdEqualTo(user.getAccountId());
         List<User> dbUsers = userMapper.selectByExample(example);
-        System.out.println(dbUsers.size());
-//        User dbUser = userMapper.findByAccountId(user.getAccountId());
         if(dbUsers.size() == 0){
             user.setGmtCreate(System.currentTimeMillis());
             user.setGmtModified(user.getGmtCreate());
