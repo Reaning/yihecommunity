@@ -5,6 +5,7 @@ import life.yihe.community.community.dto.QuestionDTO;
 import life.yihe.community.community.exception.CustomizeErrorCode;
 import life.yihe.community.community.exception.CustomizeException;
 import life.yihe.community.community.exception.ICustomizeErrorCode;
+import life.yihe.community.community.mapper.QuestionExtMapper;
 import life.yihe.community.community.mapper.QuestionMapper;
 import life.yihe.community.community.mapper.UserMapper;
 import life.yihe.community.community.model.Question;
@@ -24,6 +25,8 @@ public class QuestionService {
     private UserMapper userMapper;
     @Autowired
     private QuestionMapper questionMapper;
+    @Autowired
+    private QuestionExtMapper questionExtMapper;
 
     public PaginationDTO list(Integer page, Integer size) {
         Integer totalPage;
@@ -107,6 +110,17 @@ public class QuestionService {
                             .andIdEqualTo(question.getId());
             questionMapper.updateByExampleSelective(record, example);
         }
+    }
+
+    public void incView(Integer id) {
+//        Question question = questionMapper.selectByPrimaryKey(id);
+//        Question updateQuestion = new Question();
+//        updateQuestion.setViewCount(question.getViewCount() + 1);
+//        QuestionExample questionExample = new QuestionExample();
+//        questionExample.createCriteria()
+//                        .andIdEqualTo(id);
+//        questionMapper.updateByExampleSelective(updateQuestion, questionExample);
+        questionExtMapper.incView(id);
     }
 }
 
