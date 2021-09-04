@@ -41,3 +41,5 @@ updateByExample：全部更新
 重新设计并修改数据库
 ### 数据库不同步问题
 修改为a = a + b
+### 事务问题
+@Transaction
