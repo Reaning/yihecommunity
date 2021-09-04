@@ -37,3 +37,7 @@ mybatis.type-aliases-package没有配置好
 ### 出现id为空无法写入数据库的问题
 updateByExampleSelective：选择性更新数据<br>
 updateByExample：全部更新
+### 出现类型不匹配的设计问题
+重新设计并修改数据库
+### 数据库不同步问题
+修改为a = a + b

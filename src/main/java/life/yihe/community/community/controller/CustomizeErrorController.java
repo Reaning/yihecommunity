@@ -10,9 +10,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.Collections;
-import java.util.Map;
 
 @Controller
 @RequestMapping("${server.error.path:${error.path:/error}}")
@@ -20,6 +17,7 @@ public class CustomizeErrorController implements ErrorController {
     @RequestMapping(produces = MediaType.TEXT_HTML_VALUE)
     public ModelAndView errorHtml(HttpServletRequest request, Model model) {
         HttpStatus status = getStatus(request);
+        System.out.println(status.toString());
         if(status.is4xxClientError()){
             model.addAttribute("message","出错了！换个姿势试试？");
         }
