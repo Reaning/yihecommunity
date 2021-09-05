@@ -24,8 +24,8 @@
 <div class="container-fluid main profile">
     <div class="row">
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" style="">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <h3><span class="glyphicon glyphicon-th-list" aria-hidden="true" th:text="${question.title}"></span></h3>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"style="margin-bottom: 10px">
+            <h3><span aria-hidden="true" th:text="${question.title}"></span></h3>
             <span class="text-desc">
                 作者：
                 <span th:text="${question.user.name}"></span>|
@@ -43,6 +43,7 @@
                 编辑
             </a>
             </div>
+            <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12 comment-sp">
             <h4>
                 <span th:text="${question.commentCount}"></span>个回复
             </h4>

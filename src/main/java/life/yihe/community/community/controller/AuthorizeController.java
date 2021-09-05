@@ -1,9 +1,9 @@
 package life.yihe.community.community.controller;
 
+import life.yihe.community.community.Provider.GiteeProvider;
 import life.yihe.community.community.Provider.GithubProvider;
-import life.yihe.community.community.dto.AccessTokenDTO;
-import life.yihe.community.community.dto.GithubUser;
-import life.yihe.community.community.mapper.UserMapper;
+import life.yihe.community.community.dto.GiteeDTO;
+import life.yihe.community.community.dto.UserDTO;
 import life.yihe.community.community.model.User;
 import life.yihe.community.community.service.QuestionService;
 import life.yihe.community.community.service.UserService;
@@ -29,6 +29,9 @@ public class AuthorizeController {
     private QuestionService questionService;
 
     @Autowired
+    private GiteeProvider giteeProvider;
+
+    @Autowired
     private UserService userService;
 
     @Value("${github.client.id}")
@@ -38,31 +41,63 @@ public class AuthorizeController {
     @Value("${github.redirect.uri}")
     private String redirectUri;
 
+//    @GetMapping("/callback")
+//    public String callback(@RequestParam(name = "code")String code,
+//                           @RequestParam(name = "state")String state,
+//                           HttpServletRequest request,
+//                           HttpServletResponse response){
+//        AccessTokenDTO accessTokenDTO = new AccessTokenDTO();
+//        accessTokenDTO.setClient_id(clientId);
+//        accessTokenDTO.setClient_secret(clientSecret);
+//        accessTokenDTO.setCode(code);
+//        accessTokenDTO.setRedirect_uri(redirectUri);
+//        accessTokenDTO.setState(state);
+//        String accessToken = githubProvider.getAccessToken(accessTokenDTO);
+//        GithubUser githubUser = githubProvider.getUser(accessToken);
+//        System.out.println(githubUser.getName());
+//        if (githubUser.getId() != null) {
+//            User user = new User();
+//            String token = UUID.randomUUID().toString();
+//            user.setToken(token);
+//            user.setName(githubUser.getName());
+//            user.setAccountId(String.valueOf(githubUser.getId()));
+//            user.setAvatarUrl(githubUser.getAvatar_url());
+//            userService.createOrUpdate(user);
+//            response.addCookie(new Cookie("token",token));
+//            // 登录成功，写cookie 和session
+//            request.getSession().setAttribute("user", githubUser);
+//            return "redirect:/";
+//        } else {
+//            // 登录失败，重新登录
+//            return "redirect:/";
+//        }
+//    }
     @GetMapping("/callback")
     public String callback(@RequestParam(name = "code")String code,
-                           @RequestParam(name = "state")String state,
+//                           @RequestParam(name = "state")String state,
                            HttpServletRequest request,
                            HttpServletResponse response){
-        AccessTokenDTO accessTokenDTO = new AccessTokenDTO();
-        accessTokenDTO.setClient_id(clientId);
-        accessTokenDTO.setClient_secret(clientSecret);
-        accessTokenDTO.setCode(code);
-        accessTokenDTO.setRedirect_uri(redirectUri);
-        accessTokenDTO.setState(state);
-        String accessToken = githubProvider.getAccessToken(accessTokenDTO);
-        GithubUser githubUser = githubProvider.getUser(accessToken);
-        System.out.println(githubUser.getName());
-        if (githubUser.getId() != null) {
+        GiteeDTO giteeDTO = new GiteeDTO();
+        giteeDTO.setGrant_type("authorization_code");
+        giteeDTO.setClient_id(clientId);
+        giteeDTO.setClient_secret(clientSecret);
+        giteeDTO.setCode(code);
+        giteeDTO.setRedirect_uri(redirectUri);
+//        String accessToken = githubProvider.getAccessToken(accessTokenDTO);
+        String accessToken = giteeProvider.getAccessToken(giteeDTO);
+        UserDTO userDTO = giteeProvider.getUser(accessToken);
+        System.out.println(userDTO.getName());
+        if (userDTO.getId() != null) {
             User user = new User();
             String token = UUID.randomUUID().toString();
             user.setToken(token);
-            user.setName(githubUser.getName());
-            user.setAccountId(String.valueOf(githubUser.getId()));
-            user.setAvatarUrl(githubUser.getAvatar_url());
+            user.setName(userDTO.getName());
+            user.setAccountId(String.valueOf(userDTO.getId()));
+            user.setAvatarUrl(userDTO.getAvatar_url());
             userService.createOrUpdate(user);
             response.addCookie(new Cookie("token",token));
             // 登录成功，写cookie 和session
-            request.getSession().setAttribute("user", githubUser);
+            request.getSession().setAttribute("user", userDTO);
             return "redirect:/";
         } else {
             // 登录失败，重新登录
