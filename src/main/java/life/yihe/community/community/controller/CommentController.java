@@ -1,7 +1,9 @@
 package life.yihe.community.community.controller;
 
 import life.yihe.community.community.dto.CommentCreateDTO;
+import life.yihe.community.community.dto.CommentDTO;
 import life.yihe.community.community.dto.ResultDTO;
+import life.yihe.community.community.enums.CommentTypeEnum;
 import life.yihe.community.community.exception.CustomizeErrorCode;
 import life.yihe.community.community.exception.CustomizeException;
 import life.yihe.community.community.mapper.CommentMapper;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 public class CommentController {
@@ -48,5 +51,11 @@ public class CommentController {
         comment.setLikeCount(0L);
         commentService.insert(comment);
         return ResultDTO.okOf();
+    }
+    @ResponseBody
+    @GetMapping("/comment/{id}")
+    public ResultDTO comments(@PathVariable(name = "id")Long id){
+        List<CommentDTO> commentDTOList = commentService.listByTargetId(id, CommentTypeEnum.COMMENT.getType());
+        return ResultDTO.okOf(commentDTOList);
     }
 }

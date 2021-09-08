@@ -7,9 +7,10 @@ import lombok.Data;
 import javax.xml.transform.Result;
 
 @Data
-public class ResultDTO {
+public class ResultDTO<T> {
     private Integer code;
     private String message;
+    private T data;
 
     public static ResultDTO errorOf(ICustomizeErrorCode errorCode){
         ResultDTO resultDTO = new ResultDTO();
@@ -28,6 +29,13 @@ public class ResultDTO {
         ResultDTO resultDTO = new ResultDTO();
         resultDTO.setMessage(ex.getMessage());
         resultDTO.setCode(ex.getCode());
+        return resultDTO;
+    }
+    public static<T> ResultDTO okOf(T t){
+        ResultDTO resultDTO = new ResultDTO();
+        resultDTO.setCode(200);
+        resultDTO.setMessage("请求成功");
+        resultDTO.setData(t);
         return resultDTO;
     }
 }

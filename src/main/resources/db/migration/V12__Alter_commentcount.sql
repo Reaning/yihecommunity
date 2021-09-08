@@ -1,0 +1,1 @@
+alter table COMMENT alter column COMMENTCOUNT rename to COMMENT_COUNT;
