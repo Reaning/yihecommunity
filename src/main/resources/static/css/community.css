@@ -73,3 +73,11 @@ body{
 .question-related{
     padding-left: 20px;
 }
+.publish-tag{
+    margin-right: 5px;
+}
+.publish-tag-tab {
+    display: none;
+    margin-top: 10px;
+    padding-top: 10px;
+}

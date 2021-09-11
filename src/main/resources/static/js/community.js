@@ -95,7 +95,19 @@ function collapseComments(e){
             }
             console.log(data)
         });
-    }else{
-
+    }else{}
+}
+function showSelectTag(){
+    $("#select-tag").show();
+}
+function setTag(e){
+    var data = e.getAttribute("data-tag");
+    var str = $("#tag").val();
+    if(str.indexOf(data) == -1) {
+        if (str) {
+            $("#tag").val(str + ',' + data);
+        } else {
+            $("#tag").val(data)
+        }
     }
 }

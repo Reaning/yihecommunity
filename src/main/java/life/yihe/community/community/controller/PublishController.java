@@ -1,10 +1,13 @@
 package life.yihe.community.community.controller;
 
+import life.yihe.community.community.cache.TagCache;
 import life.yihe.community.community.dto.QuestionDTO;
+import life.yihe.community.community.dto.TagDTO;
 import life.yihe.community.community.mapper.QuestionMapper;
 import life.yihe.community.community.model.Question;
 import life.yihe.community.community.model.User;
 import life.yihe.community.community.service.QuestionService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 public class PublishController {
@@ -26,15 +30,19 @@ public class PublishController {
     public String edit(@PathVariable(name = "id")Long id,
                        Model model
     ){
+        List<TagDTO> tagDTOS = TagCache.get();
         QuestionDTO question = questionService.getById(id);
         model.addAttribute("title",question.getTitle());
         model.addAttribute("description",question.getDescription());
         model.addAttribute("tag",question.getTag());
         model.addAttribute("id",question.getId());
+        model.addAttribute("tags",tagDTOS);
         return "publish";
     }
     @GetMapping("/publish")
-    public String publish() {
+    public String publish(Model model) {
+        List<TagDTO> tagDTOS = TagCache.get();
+        model.addAttribute("tags",tagDTOS);
         return "publish";
     }
 
@@ -47,6 +55,8 @@ public class PublishController {
             HttpServletRequest request,
             Model model
     ) {
+        List<TagDTO> tagDTOS = TagCache.get();
+        model.addAttribute("tags",tagDTOS);
         model.addAttribute("title",title);
         model.addAttribute("description",description);
         model.addAttribute("tag",tag);
@@ -61,6 +71,11 @@ public class PublishController {
         }
         if(tag == null || tag.equals("")){
             model.addAttribute("error","标签不能为空");
+            return "publish";
+        }
+        String invalid = TagCache.filterInvalid(tag);
+        if(StringUtils.isNotBlank(invalid)){
+            model.addAttribute("error","输入非法标签："+ invalid);
             return "publish";
         }
         User user = (User) request.getSession().getAttribute("user");
