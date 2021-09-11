@@ -74,7 +74,9 @@ body{
     padding-left: 20px;
 }
 .publish-tag{
-    margin-right: 5px;
+    white-space: normal;
+    margin: 5px 5px;
+    display: inline-block;
 }
 .publish-tag-tab {
     display: none;
