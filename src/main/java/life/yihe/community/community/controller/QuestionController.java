@@ -3,7 +3,7 @@ package life.yihe.community.community.controller;
 import life.yihe.community.community.dto.CommentDTO;
 import life.yihe.community.community.dto.QuestionDTO;
 import life.yihe.community.community.enums.CommentTypeEnum;
-import life.yihe.community.community.mapper.QuestionMapper;
+import life.yihe.community.community.model.Question;
 import life.yihe.community.community.service.CommentService;
 import life.yihe.community.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +28,10 @@ public class QuestionController {
                            ){
         QuestionDTO questionDTO = questionService.getById(id);
         List<CommentDTO> commentDTOList = commentService.listByTargetId(id, CommentTypeEnum.QUESTION.getType());
+        List<Question>relatedQuestions = questionService.selectRelated(questionDTO);
         model.addAttribute("question",questionDTO);
         model.addAttribute("comments",commentDTOList);
+        model.addAttribute("relatedQuestions",relatedQuestions);
         questionService.incView(id);
         return "question";
     }

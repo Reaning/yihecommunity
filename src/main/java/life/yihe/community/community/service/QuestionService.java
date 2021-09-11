@@ -11,13 +11,16 @@ import life.yihe.community.community.mapper.UserMapper;
 import life.yihe.community.community.model.Question;
 import life.yihe.community.community.model.QuestionExample;
 import life.yihe.community.community.model.User;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class QuestionService {
@@ -39,7 +42,9 @@ public class QuestionService {
         if(page < 1)page = 1;
         if(page > totalPage)page = totalPage;
         Integer offset = size * (page - 1);
-        List<Question> questions = questionMapper.selectByExampleWithRowbounds(new QuestionExample(), new RowBounds(offset, size));
+        QuestionExample example = new QuestionExample();
+        example.setOrderByClause("gmt_modified desc");
+        List<Question> questions = questionMapper.selectByExampleWithRowbounds(example, new RowBounds(offset, size));
         List<QuestionDTO>questionDTOList = new ArrayList<>();
         PaginationDTO paginationDTO = new PaginationDTO();
         for(Question question : questions){
@@ -124,6 +129,16 @@ public class QuestionService {
 //                        .andIdEqualTo(id);
 //        questionMapper.updateByExampleSelective(updateQuestion, questionExample);
         questionExtMapper.incView(id);
+    }
+
+    public List<Question> selectRelated(QuestionDTO questionDTO) {
+        if(StringUtils.isBlank(questionDTO.getTag())){
+            return new ArrayList<>();
+        }
+        String[] tags = questionDTO.getTag().split(",");
+        String regexpTag = Arrays.stream(tags).collect(Collectors.joining("|"));
+        List<Question> questionList = questionExtMapper.relatedQuestion(questionDTO.getId(), regexpTag);
+        return questionList;
     }
 }
 
