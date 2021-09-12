@@ -1,8 +1,10 @@
 package life.yihe.community.community.interceptor;
 
 import life.yihe.community.community.mapper.UserMapper;
+import life.yihe.community.community.model.Notification;
 import life.yihe.community.community.model.User;
 import life.yihe.community.community.model.UserExample;
+import life.yihe.community.community.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -17,6 +19,8 @@ import java.util.List;
 public class SessionInterceptor implements HandlerInterceptor {
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private NotificationService notificationService;
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 //        User user = null;
@@ -31,6 +35,8 @@ public class SessionInterceptor implements HandlerInterceptor {
                     List<User> user = userMapper.selectByExample(userExample);
                     if (user.size() != 0) {
                         request.getSession().setAttribute("user", user.get(0));
+                        Integer newRepliesCount = notificationService.getNewRepliesCount(user.get(0).getId());
+                        request.getSession().setAttribute("countNew",newRepliesCount);
                     }
                     break;
                 }

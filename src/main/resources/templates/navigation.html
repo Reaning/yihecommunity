@@ -23,6 +23,9 @@
             </form>
             <ul class="nav navbar-nav navbar-right">
                 <li th:if="${session.user != null}">
+                    <a href="/profile/replies">消息<span class="badge" th:text="${session.countNew}"></span></a>
+                </li>
+                <li th:if="${session.user != null}">
                     <a href="/publish">发布</a>
                 </li>
                 <li class="dropdown" th:if="${session.user != null}">

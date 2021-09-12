@@ -17,7 +17,8 @@
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" style="">
             <h2><span class="glyphicon glyphicon-th-list" aria-hidden="true" th:text="${sectionName}"></span></h2>
             <hr>
-            <div class="media" th:each="question : ${pagination.questions}">
+<!--            我的问题-->
+            <div class="media" th:each="question : ${pagination.data}" th:if="${section.equals('question')}">
                 <div class="media-left">
                     <a href="#">
                         <img class="media-object img-rounded"
@@ -36,6 +37,19 @@
                             </a>
                         </span>
                     </span>
+                </div>
+            </div>
+<!--            我的回复-->
+            <div class="media" th:each="reply : ${pagination.data}" th:if="${section.equals('replies')}">
+                <div class="panel-body">
+                    <div>
+                        <span th:text="${reply.notifierName}"></span>
+                        <span th:text="${reply.typeName}"></span>
+                        <a th:href="${'/notification/'+reply.id}" th:text="${reply.outerTitle}"></a>
+                        <span class="label label-danger pull-right" th:if="${reply.status == 1}">未读</span>
+                    </div>
+                    <span th:text="${#dates.format(reply.gmtCreate,'yyyy-MM-dd HH:mm')}"></span>
+                    <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 </div>
             </div>
             <nav aria-label="Page navigation">
@@ -68,8 +82,8 @@
         </div>
         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12" style="">
             <div class="list-group section">
-                <a href="/profile/question" th:class="${section == 'question'} ? 'list-group-item active' : 'list-group-item'">我的问题<span class="badge">14</span></a>
-                <a href="/profile/replies" th:class="${section == 'replies'} ? 'list-group-item active' : 'list-group-item'">最新回复<span class="badge">14</span></a>
+                <a href="/profile/question" th:class="${section == 'question'} ? 'list-group-item active' : 'list-group-item'">我的问题</a>
+                <a href="/profile/replies" th:class="${section == 'replies'} ? 'list-group-item active' : 'list-group-item'">最新回复<span class="badge" th:text="${session.countNew}"></span></a>
             </div>
         </div>
     </div>
