@@ -86,6 +86,9 @@ public class CommentService {
     public void addNotificattion(NotificationCreateDTO notificationCreateDTO){
         Notification notification = new Notification();
         Comment comment = notificationCreateDTO.getComment();
+        if(Objects.equals(comment.getCommentator(), notification.getReceiver())){
+            return;
+        }
         notification.setOuterid(notificationCreateDTO.getOuterId());
         notification.setNotifier(comment.getCommentator());
         notification.setReceiver(notificationCreateDTO.getReceiverId());
