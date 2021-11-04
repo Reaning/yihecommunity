@@ -61,15 +61,11 @@
         </dependency>
         <!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
         <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <version>1.4.200</version>
-            <scope>test</scope>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.26</version>
         </dependency>
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-        </dependency>
+
         <dependency>
             <groupId>org.xmlunit</groupId>
             <artifactId>xmlunit-core</artifactId>
@@ -116,15 +112,15 @@
                 <artifactId>flyway-maven-plugin</artifactId>
                 <version>7.14.0</version>
                 <configuration>
-                    <url>jdbc:h2:~/community</url>
-                    <user>lu</user>
-                    <password>123</password>
+                    <url>jdbc:mysql://localhost:3306/db1</url>
+                    <user>root</user>
+                    <password>Lu6218959?</password>
                 </configuration>
                 <dependencies>
                     <dependency>
-                        <groupId>com.h2database</groupId>
-                        <artifactId>h2</artifactId>
-                        <version>1.4.200</version>
+                        <groupId>mysql</groupId>
+                        <artifactId>mysql-connector-java</artifactId>
+                        <version>8.0.26</version>
                     </dependency>
                 </dependencies>
             </plugin>
@@ -134,9 +130,9 @@
                 <version>1.3.7</version>
                 <dependencies>
                     <dependency>
-                        <groupId>com.h2database</groupId>
-                        <artifactId>h2</artifactId>
-                        <version>1.4.200</version>
+                        <groupId>mysql</groupId>
+                        <artifactId>mysql-connector-java</artifactId>
+                        <version>8.0.26</version>
                     </dependency>
                 </dependencies>
             </plugin>

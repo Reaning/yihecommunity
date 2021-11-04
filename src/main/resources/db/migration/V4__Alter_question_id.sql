@@ -1,1 +1,1 @@
-alter table QUESTION alter column ID INT auto_increment;
+alter table QUESTION modify ID INT auto_increment;

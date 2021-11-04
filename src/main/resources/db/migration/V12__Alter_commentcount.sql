@@ -1,1 +1,1 @@
-alter table COMMENT alter column COMMENTCOUNT rename to COMMENT_COUNT;
+alter table comment change commentcount comment_count int default 0 null;
