@@ -1,1 +1,1 @@
-alter table COMMENT modify ID BIGINT auto_increment;
+alter table comment modify id BIGINT auto_increment;

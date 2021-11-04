@@ -1,1 +1,1 @@
-alter table QUESTION modify GMT_MODIFIED bigint;
+alter table question modify gmt_modified bigint;
